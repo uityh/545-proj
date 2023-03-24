@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editable and Draggable Bootstrap Table</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- <script>
+      $(document).ready(function () {
+        $("#myTable tbody")
+          .sortable({
+            helper: fixWidthHelper,
+            opacity: 0.6,
+            axis: "y",
+            handle: "td",
+          })
+          .disableSelection();
+        $("#myTable tbody td").prop("contenteditable", true);
+      });
+
+      // This function fixes the width of the helper element during dragging to prevent it from collapsing
+      function fixWidthHelper(e, ui) {
+        ui.children().each(function () {
+          $(this).width($(this).width());
+        });
+        return ui;
+      }
+    </script> -->
+    <!-- <style>
+      tbody tr {
+        cursor: move;
+      }
+    </style> -->
+  </head>
+  <body>
+    <div class="container">
+      <h2>Editable and Draggable Bootstrap Table</h2>
+      <table class="table table-bordered" id="myTable">
+        <thead>
+          <tr>
+            <th>Semester</th>
+            <th>Class</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td contenteditable="true">21F</td>
+            <td contenteditable="true">CS 554</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">22S</td>
+            <td contenteditable="true">CS 545</td>
+          </tr>
+          <tr>
+            <td contenteditable="true">20S</td>
+            <td contenteditable="true">CS 546</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
