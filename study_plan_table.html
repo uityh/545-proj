@@ -33,6 +33,7 @@
         font-family: "Open Sans", sans-serif;
       }
       .table-wrapper {
+        float: right;
         width: 700px;
         margin: 30px auto;
         background: #fff;
@@ -123,6 +124,34 @@
       input[type="text"]:focus {
         border-bottom: 2px solid black;
       }
+
+      #sidebar {
+        position: fixed;
+        float: left;
+        z-index: 800;
+        width: 200px;
+        padding: 10px;
+        background-color: #f1f1f1;
+      }
+
+      #sidebar h3 {
+        font-size: 1.2em;
+        margin-top: 0;
+      }
+
+      #sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #sidebar li {
+        padding: 5px;
+        margin-bottom: 5px;
+        background-color: #ddd;
+        cursor: move;
+      }
+
     </style>
     <script>
       $(document).ready(function () {
@@ -200,6 +229,13 @@
                 <th>Actions</th>
               </tr>
             </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+                <td></td>
+              </tr>
+            </tbody>
           </table>
         </div>`
 
@@ -230,8 +266,23 @@
       });
       });
     </script>
+   <script>
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    }
+</script>
   </head>
-  <body>
+  <body>   
     <div class="container-lg">
       <div class="table-responsive">
         <div class="table-wrapper">
@@ -323,7 +374,7 @@
                 <input
                   type="text"
                   name="inputBox"
-                  placeholder="enter your text here"
+                  placeholder="study plan title"
                 />
               </div>
               <div class="col-sm-4">
@@ -397,7 +448,19 @@
             </tbody>
           </table>
         </div>
-      </div>
+         <div id="sidebar" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <h3>Courses</h3>
+            <ul>
+              <li draggable="true" ondragstart="drag(event)" id="CS 115">CS 115</li>
+              <li draggable="true" ondragstart="drag(event)" id="CS 135">CS 135</li>
+              <li draggable="true" ondragstart="drag(event)" id="CS 382">CS 382</li>
+              <li draggable="true" ondragstart="drag(event)" id="CS 284">CS 284</li>
+              <li draggable="true" ondragstart="drag(event)" id="CS 496">CS 496</li>
+              <li draggable="true" ondragstart="drag(event)" id="CS 545">CS 545</li>
+            </ul>
+        </div>
+
+      </div>      
 
     <button id="new-table">New table</button>
   </body>
