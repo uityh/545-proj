@@ -118,6 +118,7 @@
         outline: none;
         font-weight: bold;
         color: black;
+        width: 100px;
       }
 
       input[type="text"]:focus {
@@ -150,20 +151,20 @@
           }
         });
         // Edit row on edit button click
-        $(document).on("click", ".edit", function () {
-          $(this)
-            .parents("tr")
-            .find("td:not(:last-child)")
-            .each(function () {
-              $(this).html(
-                '<input type="text" class="form-control" value="' +
-                  $(this).text() +
-                  '">'
-              );
-            });
-          $(this).parents("tr").find(".add, .edit").toggle();
-          $(".add-new").attr("disabled", "disabled");
-        });
+        // $(document).on("click", ".edit", function () {
+        //   $(this)
+        //     .parents("tr")
+        //     .find("td:not(:last-child)")
+        //     .each(function () {
+        //       $(this).html(
+        //         '<input type="text" class="form-control" value="' +
+        //           $(this).text() +
+        //           '">'
+        //       );
+        //     });
+        //   $(this).parents("tr").find(".add, .edit").toggle();
+        //   $(".add-new").attr("disabled", "disabled");
+        // });
         // Delete row on delete button click
         $(document).on("click", ".delete", function () {
           $('[data-toggle="tooltip"]').tooltip("hide");
@@ -203,9 +204,33 @@
           </table>
         </div>`
 
-        //append to table-responsive
         $(".table-responsive").append(html);
+
+        //get last add new button and add click event
+         var lastAddNew = $(".table-responsive").find(".add-new").last();
+          lastAddNew.click(function () {
+            //get parent and get table sibling
+            var table = $(this).parent().parent().parent().siblings("table");
+            var index = table.find("tbody tr:last-child").index();
+            var row =
+              "<tr>" +
+              '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+              '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+              '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+              "<td>" +
+              actions +
+              "</td>" +
+              "</tr>";
+            table.append(row);
+            table
+              .eq(index + 1)
+              .find(".add, .edit")
+              .toggle();
+            $('[data-toggle="tooltip"]').tooltip();
         });
+        });
+
+
 
  //add new row should add a new row to the table
   $(".add-new").click(function () {
@@ -262,51 +287,87 @@
             </thead>
             <tbody>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
                 </td>
               </tr>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
                 </td>
               </tr>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
@@ -344,51 +405,87 @@
             </thead>
             <tbody>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
                 </td>
               </tr>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
                 </td>
               </tr>
               <tr>
-                <td>21F
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
                 </td>
-                <td>CS 545</td>
-                <td>A</td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
                 <td>
-                  <a class="add" title="Add" data-toggle="tooltip"
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
                     ><i class="material-icons">&#xE03B;</i></a
                   >
                   <a class="edit" title="Edit" data-toggle="tooltip"
                     ><i class="material-icons">&#xE254;</i></a
-                  >
+                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
