@@ -1,0 +1,23 @@
+{
+  "name": "545-proj",
+  "version": "1.0.0",
+  "description": "Project for CS 545",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uityh/545-proj.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uityh/545-proj/issues"
+  },
+  "homepage": "https://github.com/uityh/545-proj#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.1.0"
+  }
+}
