@@ -2,7 +2,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    
 }
 
 body {
@@ -97,8 +96,54 @@ input[type="text"] {
     font-weight: bold;
     color: black;
     width: 100px;
+    padding-bottom: 2px; /* Add padding to prevent row height change */
 }
 
 input[type="text"]:focus {
     border-bottom: 2px solid black;
+}
+
+.add-new-table {
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    color: #404e67;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.add-new-table:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #404e67;
+    color: #fff;
+    height: 60px;
+    width: 100%;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.table-title .add-new:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+input[placeholder="Enter text"] {
+    display: none; /* Hide the existing input */
 }
