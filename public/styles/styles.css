@@ -36,6 +36,9 @@ body {
     font-size: 22px;
     color: var(--light-grey);
 }
+.header {
+    background-color: var(--background);
+}
 .table-title .add-new {
     float: right;
     height: 30px;
