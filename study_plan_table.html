@@ -60,6 +60,18 @@
       .table-title .add-new i {
         margin-right: 4px;
       }
+      .table-title .open-modal {
+        float: right;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+        background-color: red;
+        border-color: red;
+      }
       table.table {
         table-layout: fixed;
       }
@@ -178,14 +190,19 @@
           var html = `<div class="table-wrapper">
           <div class="table-title">
             <div class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <input
                   type="text"
                   name="inputBox"
                   placeholder="enter your text here"
                 />
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Plan
+                </button>
+              </div>
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-info add-new">
                   <i class="fa fa-plus"></i> Add New Row
                 </button>
@@ -202,6 +219,7 @@
               </tr>
             </thead>
           </table>
+          
         </div>`
 
         $(".table-responsive").append(html);
@@ -228,7 +246,30 @@
               .toggle();
             $('[data-toggle="tooltip"]').tooltip();
         });
-        });
+
+      //gets last open-modal element and adds click event
+      var lastDeleteTable = $(".table-responsive").find(".open-modal").last();
+      lastDeleteTable.click(function () {
+         $("#deleteModal").modal('show');
+         $(this).parent().parent().parent().parent().attr("id", "deleted");
+      });
+         // removes table
+    $("#removeTable").click(function () {
+           //$(this).closest(".table-wrapper1").remove();
+           $(".table-wrapper").remove("#deleted");
+           $("#deleteModal").modal('hide');
+           //$("div").remove(".modal-backdrop");
+    });
+
+    // removing deleted id
+    $("#close-modal").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+    $(".close").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+      });
 
 
 
@@ -252,30 +293,85 @@
             .find(".add, .edit")
             .toggle();
           $('[data-toggle="tooltip"]').tooltip();
-      });
-      });
+  });
+
+
+
+  // opens modal on delete plan button
+   $(".open-modal").click(function(){
+        $("#deleteModal").modal('show');
+        $(this).parent().parent().parent().parent().attr("id", "deleted");
+    });
+
+    // removes table
+    $("#removeTable").click(function () {
+           //$(this).closest(".table-wrapper1").remove();
+           $(".table-wrapper").remove("#deleted");
+           $("#deleteModal").modal('hide');
+           //$("div").remove(".modal-backdrop");
+    });
+
+    // removing deleted id
+    $("#close-modal").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+    $(".close").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+
+  });
+    
     </script>
   </head>
-  <body>
+  <body>    
+    <!--Modal HTML-->
+    <div class="modal fade" id="deleteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Plan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete?</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">No</button>
+          <button type="button" class="btn btn-danger" id="removeTable">Yes</button>
+        </div>
+        </div>
+      </div>
+      </div>
+    <!-- Table HTML -->
     <div class="container-lg">
       <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
+        <div class="table-wrapper">          
+          <div class="table-title">                    
             <div class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <input
                   type="text"
                   name="inputBox"
                   placeholder="enter your text here"
                 />
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Plan
+                </button>
+              </div>
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-info add-new">
                   <i class="fa fa-plus"></i> Add New Row
                 </button>
               </div>
             </div>
           </div>
+          
           <table class="table table-bordered" id="table-1">
             <thead>
               <tr>
@@ -376,18 +472,25 @@
             </tbody>
           </table>
         </div>
-
+        
         <div class="table-wrapper">
           <div class="table-title">
+      
             <div class="row">
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <input
                   type="text"
                   name="inputBox"
                   placeholder="enter your text here"
                 />
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Plan
+                </button>
+              </div>
+
+              <div class="col-sm-3">
                 <button type="button" class="btn btn-info add-new">
                   <i class="fa fa-plus"></i> Add New Row
                 </button>
