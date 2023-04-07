@@ -1,0 +1,184 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #2b2d42;
+    --grey: #8d99ae;
+    --light-grey: #edf2f4;
+    --red: #ef233c;
+    --second-red: #d90429;
+}
+
+body {
+    color: var(--light-grey);
+    background: var(--background);
+    font-family: "Open Sans", sans-serif;
+}
+.table-wrapper {
+    width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    box-shadow: 0 1px 1px var(--grey);
+    border-radius: 5px;
+    background-color: var(--light-grey);
+}
+.table-title {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+    border-bottom: 1px solid var(--grey);
+
+}
+.table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+    color: var(--light-grey);
+}
+.header {
+    background-color: var(--background);
+}
+.table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    padding: 5px 15px;
+    border-radius: 50px;
+    line-height: 13px;
+    background-color: var(--red);
+    color: var(--light-grey);
+}
+.table-title .add-new i {
+    margin-right: 4px;
+}
+.table-title .add-new:hover {
+    background-color: var(--second-red);
+}
+
+table.table {
+    table-layout: fixed;
+    border-spacing: 0;
+    border-radius: 5px;
+}
+
+table.table tr th,
+table.table tr td {
+    border-color: var(--grey);
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: 100px;
+}
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}
+table.table td a.add {
+    color: #27c46b;
+}
+table.table td a.edit {
+    color: #ffc107;
+}
+table.table td a.delete {
+    color: #e34724;
+}
+table.table td i {
+    font-size: 19px;
+}
+table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+table.table .form-control.error {
+    border-color: #f50000;
+}
+table.table td .add {
+    display: none;
+}
+
+input[type="text"] {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: bold;
+    color: black;
+    width: 100px;
+    padding-bottom: 2px; /* Add padding to prevent row height change */
+}
+
+input[type="text"]:focus {
+    border-bottom: 2px solid black;
+}
+
+table.table tr input[type="text"] {
+    color: #404e67;
+    font-weight: normal;
+        width: 100%;
+    padding-bottom: 0;
+}
+
+.add-new-table {
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+    color: #404e67;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.add-new-table:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--grey);
+    color: var(--light-grey);
+    height: 60px;
+    width: 100%;
+}
+
+.footer a {
+    color: var(--light-grey);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--second-red);
+}
+
+.table-title .add-new:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+input[placeholder="Enter text"] {
+    display: none; /* Hide the existing input */
+}
