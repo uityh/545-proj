@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My List</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <head>
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+      <title>Scheduckler</title>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
+      />
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      />
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+      <link rel="stylesheet" href="../public/styles/styles.css" />
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+      }
+      h1 {
+        text-align: center;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      li:last-child {
+        border-bottom: none;
+      }
+      .delete-icon {
+        color: red;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-content button {
+        margin-top: 16px;
+        padding: 8px 16px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .modal-text {
+        text-align: center;
+        color: #000;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Study Forms</h1>
+    <ul id="list">
+      <li><a href="file:///C:/Users/matth/OneDrive/Documents/CS%20Stuff/Stevens%20CS%20HW/CS545/repo/pages/study_plan_table.html">CS Major with No Minor</a> <a
+        class="delete"
+        title="Delete"
+        data-toggle="tooltip"
+        ><i class="material-icons"
+            >&#xE872;</i
+        ></a
+    ></i></li>
+      <li><a href="file:///C:/Users/matth/OneDrive/Documents/CS%20Stuff/Stevens%20CS%20HW/CS545/repo/pages/study_plan_table.html">CS Major with Math Minor</a> <a
+        class="delete"
+        title="Delete"
+        data-toggle="tooltip"
+        ><i class="material-icons"
+            >&#xE872;</i
+        ></a
+    ></i></li>
+      <li><a href="file:///C:/Users/matth/OneDrive/Documents/CS%20Stuff/Stevens%20CS%20HW/CS545/repo/pages/study_plan_table.html">CS Major with CySec Minor</a> <a
+        class="delete"
+        title="Delete"
+        data-toggle="tooltip"
+        ><i class="material-icons"
+            >&#xE872;</i
+        ></a
+    ></i></li>
+    </ul>
+
+    <button id="add-btn">Add Item</button>
+
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <p class="modal-text">Are you sure you want to delete this item?</p>
+        <button id="confirm-delete-btn">Yes</button>
+        <button id="cancel-delete-btn">Cancel</button>
+      </div>
+    </div>
+
+    <!--modal that allows user to type in input-->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <p class="modal-text">Enter new item</p>
+        <input type="text" id="add-input" />
+        <button id="confirm-add-btn">Add</button>
+        <button id="cancel-add-btn">Cancel</button>
+      </div>
+
+
+    <script>
+        $(document).ready(function () {
+         $('[data-toggle="tooltip"]').tooltip();
+        const list = document.querySelector("#list");
+        const addBtn = document.querySelector("#add-btn");
+        const modal = document.querySelector("#deleteModal");
+        const confirmDeleteBtn = document.querySelector("#confirm-delete-btn");
+        const cancelDeleteBtn = document.querySelector("#cancel-delete-btn");
+    
+
+        $("#add-btn").on("click", function () {
+          $("#addModal").css("display", "block");
+      });
+
+      $("#confirm-add-btn").on("click", function () {
+            //get text from input
+            const item = $("#add-input").val();
+            if (item) {
+            const li = document.createElement("li");
+            //add item to href in link
+            const link = document.createElement("a");
+            link.setAttribute("href", "link");
+            link.innerText = item;
+            li.appendChild(link);
+            li.innerHTML += `<a
+            class="delete"
+            title="Delete"
+            data-toggle="tooltip"
+            ><i class="material-icons"
+                >&#xE872;</i
+            ></a
+        ></i>`;
+            list.appendChild(li);
+            }
+
+            $("#addModal").css("display", "none");
+            $("#add-input").val("");
+        });
+            
+
+        //show modal when delete icon is clicked
+        $("#list").on("click", ".delete", function () {
+          $("#deleteModal").css("display", "block");
+          const deleteIcon = $(this);
+            $("#confirm-delete-btn").on("click", function () {
+               deleteIcon.closest("li").remove();
+                $("#deleteModal").css("display", "none");
+            });
+
+        });
+
+
+        //hide modal when cancel button is clicked or clicked outside of modal
+        cancelDeleteBtn.addEventListener("click", () => {
+          $("#deleteModal").css("display", "none");
+        });
+
+        $("#cancel-add-btn").on("click", function () {
+          $("#addModal").css("display", "none");
+        });
+
+        window.addEventListener("click", (e) => {
+            if (e.target == deleteModal || e.target == addModal) {
+                $("#deleteModal").css("display", "none");
+                $("#addModal").css("display", "none");
+            }
+        });
+    });
+    </script>
+  </body>
+</html>
