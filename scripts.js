@@ -1,3 +1,28 @@
+function updateHeader() {
+    const loggedInUser = sessionStorage.getItem("user");
+
+    if (loggedInUser) {
+        document.querySelector(
+            ".nav-item:nth-child(1) a"
+        ).textContent = `Hello, ${loggedInUser}!`;
+        document.querySelector(".nav-item:nth-child(2) a").textContent =
+            "Log out";
+        document.querySelector(".nav-item:nth-child(2) a").href = "/logout";
+    }
+}
+
+updateHeader(); // Call the function on page load
+
+document
+    .querySelector(".nav-item:nth-child(2) a")
+    .addEventListener("click", (event) => {
+        if (event.target.textContent === "Log out") {
+            event.preventDefault();
+            sessionStorage.removeItem("user");
+            window.location.href = "/logout";
+        }
+    });
+
 $(document).ready(function () {
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();

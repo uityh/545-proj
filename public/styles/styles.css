@@ -1,9 +1,4 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
+/* Existing CSS from your code */
 :root {
     --background: #2b2d42;
     --grey: #8d99ae;
@@ -17,6 +12,48 @@ body {
     background: var(--background);
     font-family: "Open Sans", sans-serif;
 }
+
+header {
+    background-color: var(--background);
+}
+
+.navbar {
+    background-color: var(--background);
+    padding: 0.5rem 1rem;
+}
+
+.navbar .navbar-brand {
+    color: var(--light-grey);
+    font-weight: bold;
+}
+
+.navbar .navbar-toggler {
+    border-color: var(--grey);
+}
+
+.navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' %3E%3Cpath stroke='rgba(237, 242, 244, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar .nav-link {
+    color: var(--light-grey);
+    transition: color 0.3s;
+}
+
+.navbar .nav-link:hover {
+    color: var(--grey);
+}
+
+.navbar .nav-item:last-child .nav-link {
+    padding-right: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 .table-wrapper {
     width: 700px;
     margin: 30px auto;
@@ -244,20 +281,6 @@ input[type="text"] {
     resize: vertical;
 }
 
-.navbar {
-    background-color: var(--background);
-    padding: 0.5rem 1rem;
-}
-
-.navbar .nav-link {
-    color: var(--light-grey);
-    transition: color 0.3s;
-}
-
-.navbar .nav-link:hover {
-    color: var(--grey);
-}
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -313,4 +336,49 @@ input[type="text"] {
 
 .add-icon {
     font-size: 48px;
+}
+
+/* Add or update these styles */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    outline: none;
+}
+
+button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }

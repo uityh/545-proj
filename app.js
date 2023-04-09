@@ -1,6 +1,13 @@
 import express from "express";
+import path from "path";
 const app = express();
-import configRoutes from "./routes/index.js";
+import configRoutes from "./server/routes/index.js";
+
+const __dirname = path.resolve();
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "pages"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.json());
 
