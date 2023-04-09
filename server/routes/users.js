@@ -30,10 +30,6 @@ router.route("/register").post(async (req, res) => {
         res.status(201).json({
             message:
                 "Signed up successfully. Now Log in using this information",
-            // user: {
-            //     _id: newUser.ops[0]._id,
-            //     username: newUser.ops[0].username,
-            // },
         });
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
@@ -60,13 +56,6 @@ router.route("/login").post(async (req, res) => {
                 .status(401)
                 .json({ message: "Invalid username or password" });
         }
-
-        // const userToSend = {
-        //     _id: user._id,
-        //     username: user.username,
-        // };
-
-        // console.log("User to send:", userToSend);
 
         res.status(200).json({
             message: "Logged in successfully",
