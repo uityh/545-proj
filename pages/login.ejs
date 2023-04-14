@@ -33,10 +33,12 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/login">Log in</a>
+                                <span id="user-message" style="display: none"
+                                    >Hello, User!</span
+                                >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/signup">Sign up</a>
+                                <a class="nav-link" href="/login">Log in</a>
                             </li>
                         </ul>
                     </div>
@@ -45,48 +47,20 @@
         </header>
         <h1>Login</h1>
         <div class="form-container">
-            <form id="login-form" method="POST" action="/users/login">
-                <h2>Login</h2>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                />
-                <button type="submit">Log in</button>
-            </form>
+            <button id="login-btn" class="btn btn-primary">Log in</button>
         </div>
         <script>
-            const loginForm = document.getElementById("login-form");
-            loginForm.addEventListener("submit", async (event) => {
-                event.preventDefault();
-                const formData = new FormData(loginForm);
-                const data = Object.fromEntries(formData.entries());
-                const response = await fetch("/users/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
+            document
+                .getElementById("login-btn")
+                .addEventListener("click", () => {
+                    alert("Login successful");
+                    // Set the loggedIn flag in localStorage
+                    localStorage.setItem("loggedIn", true);
+                    // Redirect to the homepage, showing a "Hello, User!" message
+                    window.location.href = "/";
                 });
-
-                const jsonResponse = await response.json(); // Parse the JSON response from the server
-
-                if (response.ok) {
-                    sessionStorage.setItem("user", data.username); // Store the logged-in user's username
-                    alert(jsonResponse.message);
-                    window.location.href = "/"; // Redirect to the homepage
-                } else {
-                    alert(jsonResponse.message);
-                }
-            });
         </script>
+
         <footer class="footer">
             <a href="https://github.com" target="_blank">View on Github</a>
         </footer>
