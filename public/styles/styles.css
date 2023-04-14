@@ -1,4 +1,9 @@
-/* Existing CSS from your code */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --background: #2b2d42;
     --grey: #8d99ae;
@@ -12,48 +17,6 @@ body {
     background: var(--background);
     font-family: "Open Sans", sans-serif;
 }
-
-header {
-    background-color: var(--background);
-}
-
-.navbar {
-    background-color: var(--background);
-    padding: 0.5rem 1rem;
-}
-
-.navbar .navbar-brand {
-    color: var(--light-grey);
-    font-weight: bold;
-}
-
-.navbar .navbar-toggler {
-    border-color: var(--grey);
-}
-
-.navbar .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' %3E%3Cpath stroke='rgba(237, 242, 244, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-.navbar .nav-link {
-    color: var(--light-grey);
-    transition: color 0.3s;
-}
-
-.navbar .nav-link:hover {
-    color: var(--grey);
-}
-
-.navbar .nav-item:last-child .nav-link {
-    padding-right: 0;
-}
-
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
 .table-wrapper {
     width: 700px;
     margin: 30px auto;
@@ -66,11 +29,15 @@ header {
     padding-bottom: 10px;
     margin: 0 0 10px;
     border-bottom: 1px solid var(--grey);
+
 }
 .table-title h2 {
     margin: 6px 0 0;
     font-size: 22px;
     color: var(--light-grey);
+}
+.header {
+    background-color: var(--background);
 }
 .table-title .add-new {
     float: right;
@@ -163,7 +130,7 @@ input[type="text"]:focus {
 table.table tr input[type="text"] {
     color: #404e67;
     font-weight: normal;
-    width: 100%;
+        width: 100%;
     padding-bottom: 0;
 }
 
@@ -214,171 +181,4 @@ button:focus {
 
 input[placeholder="Enter text"] {
     display: none; /* Hide the existing input */
-}
-
-h1 {
-    text-align: center;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-li {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-li:last-child {
-    border-bottom: none;
-}
-.delete-icon {
-    color: red;
-    cursor: pointer;
-    margin-left: 8px;
-}
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.modal-content button {
-    margin-top: 16px;
-    padding: 8px 16px;
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.modal-text {
-    text-align: center;
-    color: #000;
-}
-
-input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-}
-
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.card {
-    background-color: var(--grey);
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 1px 1px var(--grey);
-    position: relative;
-    text-decoration: none;
-    color: black;
-    width: 280px;
-    transition: box-shadow 0.3s;
-}
-
-.card:hover {
-    box-shadow: 0 4px 6px var(--grey);
-}
-
-.delete {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    color: var(--red);
-    cursor: pointer;
-}
-
-.add-card-btn {
-    width: 280px;
-    height: 150px;
-    background-color: rgba(0, 0, 0, 0.1);
-    font-size: 24px;
-    font-weight: bold;
-    padding: 10px 0;
-    color: #404e67;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-}
-
-.add-card-btn:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.add-icon {
-    font-size: 48px;
-}
-
-/* Add or update these styles */
-.form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 100px); /* Adjust based on header/footer height */
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    outline: none;
-}
-
-button[type="submit"] {
-    padding: 8px 16px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #0056b3;
 }

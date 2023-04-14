@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        color: #404e67;
+        background: #f5f7fa;
+        font-family: "Open Sans", sans-serif;
+      }
+      .table-wrapper {
+        width: 700px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+      }
+      .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+      }
+      .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+      }
+      .table-title .add-new {
+        float: right;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+      }
+      .table-title .add-new i {
+        margin-right: 4px;
+      }
+      .table-title .open-modal {
+        float: right;
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+        background-color: red;
+        border-color: red;
+      }
+      table.table {
+        table-layout: fixed;
+      }
+      table.table tr th,
+      table.table tr td {
+        border-color: #e9e9e9;
+      }
+      table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      table.table th:last-child {
+        width: 100px;
+      }
+      table.table td a {
+        cursor: pointer;
+        display: inline-block;
+        margin: 0 5px;
+        min-width: 24px;
+      }
+      table.table td a.add {
+        color: #27c46b;
+      }
+      table.table td a.edit {
+        color: #ffc107;
+      }
+      table.table td a.delete {
+        color: #e34724;
+      }
+      table.table td i {
+        font-size: 19px;
+      }
+      table.table td a.add i {
+        font-size: 24px;
+        margin-right: -1px;
+        position: relative;
+        top: 3px;
+      }
+      table.table .form-control {
+        height: 32px;
+        line-height: 32px;
+        box-shadow: none;
+        border-radius: 2px;
+      }
+      table.table .form-control.error {
+        border-color: #f50000;
+      }
+      table.table td .add {
+        display: none;
+      }
+
+      input[type="text"] {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        font-weight: bold;
+        color: black;
+        width: 100px;
+      }
+
+      input[type="text"]:focus {
+        border-bottom: 2px solid black;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        var actions = $("table td:last-child").html();
+
+        $(document).on("click", ".add", function () {
+          var empty = false;
+          var input = $(this).parents("tr").find('input[type="text"]');
+          input.each(function () {
+            if (!$(this).val()) {
+              $(this).addClass("error");
+              empty = true;
+            } else {
+              $(this).removeClass("error");
+            }
+          });
+          $(this).parents("tr").find(".error").first().focus();
+          if (!empty) {
+            input.each(function () {
+              $(this).parent("td").html($(this).val());
+            });
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").removeAttr("disabled");
+          }
+        });
+        // Edit row on edit button click
+        // $(document).on("click", ".edit", function () {
+        //   $(this)
+        //     .parents("tr")
+        //     .find("td:not(:last-child)")
+        //     .each(function () {
+        //       $(this).html(
+        //         '<input type="text" class="form-control" value="' +
+        //           $(this).text() +
+        //           '">'
+        //       );
+        //     });
+        //   $(this).parents("tr").find(".add, .edit").toggle();
+        //   $(".add-new").attr("disabled", "disabled");
+        // });
+        // Delete row on delete button click
+        $(document).on("click", ".delete", function () {
+          $('[data-toggle="tooltip"]').tooltip("hide");
+
+          $(this).parents("tr").remove();
+          $(".add-new").removeAttr("disabled");
+        });
+
+        $("#new-table").click(function () {
+
+          var html = `<div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  name="inputBox"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Section
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info add-new">
+                  <i class="fa fa-plus"></i> Add New Row
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table table-bordered" id="table-1">
+            <thead>
+              <tr>
+                <th>Semester</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+          </table>
+          
+        </div>`
+
+        $(".table-responsive").append(html);
+
+        //get last add new button and add click event
+         var lastAddNew = $(".table-responsive").find(".add-new").last();
+          lastAddNew.click(function () {
+            //get parent and get table sibling
+            var table = $(this).parent().parent().parent().siblings("table");
+            var index = table.find("tbody tr:last-child").index();
+            var row =
+            "<tr>" +
+            '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
+            '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
+            '<td><input type="text"  name="inputBox" placeholder="A"></td>' +
+            "<td>" +
+            actions +
+            "</td>" +
+            "</tr>";
+            table.append(row);
+            table
+              .eq(index + 1)
+              .find(".add, .edit")
+              .toggle();
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+      //gets last open-modal element and adds click event
+      var lastDeleteTable = $(".table-responsive").find(".open-modal").last();
+      lastDeleteTable.click(function () {
+         $("#deleteModal").modal('show');
+         $(this).parent().parent().parent().parent().attr("id", "deleted");
+      });
+         // removes table
+    $("#removeTable").click(function () {
+           //$(this).closest(".table-wrapper1").remove();
+           $(".table-wrapper").remove("#deleted");
+           $("#deleteModal").modal('hide');
+           //$("div").remove(".modal-backdrop");
+    });
+
+    // removing deleted id
+    $("#close-modal").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+    $(".close").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+      });
+
+
+
+ //add new row should add a new row to the table
+  $(".add-new").click(function () {
+
+    var table = $(this).parent().parent().parent().siblings("table");
+    var index = table.find("tbody tr:last-child").index();
+    var row =
+            "<tr>" +
+            '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
+            '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
+            '<td><input type="text"  name="inputBox" placeholder="A"></td>' +
+            "<td>" +
+            actions +
+            "</td>" +
+            "</tr>";
+          table.append(row);
+         table
+            .eq(index + 1)
+            .find(".add, .edit")
+            .toggle();
+          $('[data-toggle="tooltip"]').tooltip();
+  });
+
+
+
+  // opens modal on Delete Section button
+   $(".open-modal").click(function(){
+        $("#deleteModal").modal('show');
+        $(this).parent().parent().parent().parent().attr("id", "deleted");
+    });
+
+    // removes table
+    $("#removeTable").click(function () {
+           //$(this).closest(".table-wrapper1").remove();
+           $(".table-wrapper").remove("#deleted");
+           $("#deleteModal").modal('hide');
+           //$("div").remove(".modal-backdrop");
+    });
+
+    // removing deleted id
+    $("#close-modal").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+    $(".close").click(function (){
+       $("#deleted").removeAttr("id");
+    });
+
+
+  });
+
+    </script>
+  </head>
+  <body>    
+    <!--Modal HTML-->
+    <div class="modal fade" id="deleteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Section</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this table?</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">No</button>
+          <button type="button" class="btn btn-danger" id="removeTable">Yes</button>
+        </div>
+        </div>
+      </div>
+      </div>
+    <!-- Table HTML -->
+    <div class="container-lg">
+      <div class="table-responsive">
+        <div class="table-wrapper">          
+          <div class="table-title">                    
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  name="inputBox"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Section
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info add-new">
+                  <i class="fa fa-plus"></i> Add New Row
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <table class="table table-bordered" id="table-1">
+            <thead>
+              <tr>
+                <th>Semester</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrapper">
+          <div class="table-title">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  name="inputBox"
+                  placeholder="Title"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Section
+                </button>
+              </div>
+
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info add-new">
+                  <i class="fa fa-plus"></i> Add New Row
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table table-bordered" id="table-1">
+            <thead>
+              <tr>
+                <th>Semester</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="20F"
+                />
+                </td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="CS 545"
+                /></td>
+                <td><input
+                  type="text"
+                  name="inputBox"
+                  placeholder="A"
+                /></td>
+                <td>
+                  <!-- <a class="add" title="Add" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE03B;</i></a
+                  >
+                  <a class="edit" title="Edit" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE254;</i></a
+                  > -->
+                  <a class="delete" title="Delete" data-toggle="tooltip"
+                    ><i class="material-icons">&#xE872;</i></a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    <button id="new-table">New table</button>
+    <button id="save-btn">Save</button>
+  </body>
+</html>
