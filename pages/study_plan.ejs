@@ -320,6 +320,15 @@
        $("#deleted").removeAttr("id");
     });
 
+    $("#save-plan-btn").click(function(){
+        let requestConfig = {
+        method: 'POST',
+        url: 'localhost:3000/' + "the id"
+      };
+        $.ajax(requestConfig).then(function (responseMessage) {
+            console.log(responseMessage);
+        });
+    });
 
   });
 
@@ -600,6 +609,6 @@
       </div>
 
     <button id="new-table">New table</button>
-    <button id="save-btn">Save</button>
+    <button id="save-plan-btn">Save</button>
   </body>
 </html>
