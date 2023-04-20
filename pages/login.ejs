@@ -81,7 +81,7 @@
                 if (response.ok) {
                     sessionStorage.setItem("user", data.username); // Store the logged-in user's username
                     alert(jsonResponse.message);
-                    window.location.href = "/"; // Redirect to the homepage
+                    window.location.href = `/users/home/${jsonResponse.user._id}`; // Redirect to the homepage
                 } else {
                     alert(jsonResponse.message);
                 }
