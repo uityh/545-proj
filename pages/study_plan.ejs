@@ -141,6 +141,139 @@
       $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
         var actions = $("table td:last-child").html();
+        var formId = $("#form-id")[0].innerHTML;
+
+        $("input").on("change", function () {
+          var inputValue = $(this).val();
+        });
+
+        //get sections from database and add table for each section
+        $.ajax({
+          url: `http://localhost:3000/users/plans/${formId}`,
+          type: "GET",
+          contentType: "application/json",
+          success: function (data) {
+            $("#form-title").val(data.formTitle);
+            let sections = data.sections;
+
+            sections.map((section) => {
+              var html = `<div class="table-wrapper">
+          <div class="table-title">
+            <div class="row">
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  name="inputBox"
+                  placeholder="Title"
+                  value="${section.sectionTitle}"
+                />
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info open-modal">
+                  <i class="fa fa-minus"></i> Delete Section
+                </button>
+              </div>
+              <div class="col-sm-3">
+                <button type="button" class="btn btn-info add-new">
+                  <i class="fa fa-plus"></i> Add New Row
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table table-bordered" id="table-1">
+            <thead>
+              <tr>
+                <th>Semester</th>
+                <th>Course</th>
+                <th>Grade</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+          </table>
+          
+        </div>`;
+
+              $(".table-responsive").append(html);
+
+              var lastAddNew = $(".table-responsive").find(".add-new").last();
+              lastAddNew.click(function () {
+                //get parent and get table sibling
+                var table = $(this)
+                  .parent()
+                  .parent()
+                  .parent()
+                  .siblings("table");
+                var index = table.find("tbody tr:last-child").index();
+                var row =
+                  "<tr>" +
+                  '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
+                  '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
+                  '<td><input type="text"  name="inputBox" placeholder="A"></td>' +
+                  "<td>" +
+                  actions +
+                  "</td>" +
+                  "</tr>";
+                table.append(row);
+                table
+                  .eq(index + 1)
+                  .find(".add, .edit")
+                  .toggle();
+                $('[data-toggle="tooltip"]').tooltip();
+              });
+
+              var lastDeleteTable = $(".table-responsive")
+                .find(".open-modal")
+                .last();
+              lastDeleteTable.click(function () {
+                $("#deleteModal").modal("show");
+                $(this)
+                  .parent()
+                  .parent()
+                  .parent()
+                  .parent()
+                  .attr("id", "deleted");
+              });
+              //for each course in section, add row to table
+              section.courses.map((course) => {
+                var row = `<tr>
+          <td>
+            <input
+              type="text"
+              name="inputBox"
+              placeholder="Semester"
+              value="${course.semester}"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="inputBox"
+              placeholder="Course"
+              value="${course.courseName}"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              name="inputBox"
+              placeholder="Grade"
+              value="${course.grade}"
+            />
+          </td>
+          <td>
+            <a class="delete" title="Delete" data-toggle="tooltip"
+              ><i class="material-icons">&#xE872;</i
+            ></a>
+          </td>
+        </tr>`;
+                $(".table-responsive").find("table").last().append(row);
+              });
+            });
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
 
         $(document).on("click", ".add", function () {
           var empty = false;
@@ -186,7 +319,6 @@
         });
 
         $("#new-table").click(function () {
-
           var html = `<div class="table-wrapper">
           <div class="table-title">
             <div class="row">
@@ -220,65 +352,64 @@
             </thead>
           </table>
           
-        </div>`
+        </div>`;
 
-        $(".table-responsive").append(html);
+          $(".table-responsive").append(html);
 
-        //get last add new button and add click event
-         var lastAddNew = $(".table-responsive").find(".add-new").last();
+          //get last add new button and add click event
+          var lastAddNew = $(".table-responsive").find(".add-new").last();
           lastAddNew.click(function () {
             //get parent and get table sibling
             var table = $(this).parent().parent().parent().siblings("table");
             var index = table.find("tbody tr:last-child").index();
             var row =
-            "<tr>" +
-            '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
-            '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
-            '<td><input type="text"  name="inputBox" placeholder="A"></td>' +
-            "<td>" +
-            actions +
-            "</td>" +
-            "</tr>";
+              "<tr>" +
+              '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
+              '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
+              '<td><input type="text"  name="inputBox" placeholder="A"></td>' +
+              "<td>" +
+              actions +
+              "</td>" +
+              "</tr>";
             table.append(row);
             table
               .eq(index + 1)
               .find(".add, .edit")
               .toggle();
             $('[data-toggle="tooltip"]').tooltip();
+          });
+
+          //gets last open-modal element and adds click event
+          var lastDeleteTable = $(".table-responsive")
+            .find(".open-modal")
+            .last();
+          lastDeleteTable.click(function () {
+            $("#deleteModal").modal("show");
+            $(this).parent().parent().parent().parent().attr("id", "deleted");
+          });
+          // removes table
+          $("#removeTable").click(function () {
+            //$(this).closest(".table-wrapper1").remove();
+            $(".table-wrapper").remove("#deleted");
+            $("#deleteModal").modal("hide");
+            //$("div").remove(".modal-backdrop");
+          });
+
+          // removing deleted id
+          $("#close-modal").click(function () {
+            $("#deleted").removeAttr("id");
+          });
+
+          $(".close").click(function () {
+            $("#deleted").removeAttr("id");
+          });
         });
 
-      //gets last open-modal element and adds click event
-      var lastDeleteTable = $(".table-responsive").find(".open-modal").last();
-      lastDeleteTable.click(function () {
-         $("#deleteModal").modal('show');
-         $(this).parent().parent().parent().parent().attr("id", "deleted");
-      });
-         // removes table
-    $("#removeTable").click(function () {
-           //$(this).closest(".table-wrapper1").remove();
-           $(".table-wrapper").remove("#deleted");
-           $("#deleteModal").modal('hide');
-           //$("div").remove(".modal-backdrop");
-    });
-
-    // removing deleted id
-    $("#close-modal").click(function (){
-       $("#deleted").removeAttr("id");
-    });
-
-    $(".close").click(function (){
-       $("#deleted").removeAttr("id");
-    });
-      });
-
-
-
- //add new row should add a new row to the table
-  $(".add-new").click(function () {
-
-    var table = $(this).parent().parent().parent().siblings("table");
-    var index = table.find("tbody tr:last-child").index();
-    var row =
+        //add new row should add a new row to the table
+        $(".add-new").click(function () {
+          var table = $(this).parent().parent().parent().siblings("table");
+          var index = table.find("tbody tr:last-child").index();
+          var row =
             "<tr>" +
             '<td><input type="text" name="inputBox" placeholder="20F"></td>' +
             '<td><input type="text"  name="inputBox" placeholder="CS 545"></td>' +
@@ -288,201 +419,144 @@
             "</td>" +
             "</tr>";
           table.append(row);
-         table
+          table
             .eq(index + 1)
             .find(".add, .edit")
             .toggle();
           $('[data-toggle="tooltip"]').tooltip();
-  });
-
-
-
-  // opens modal on Delete Section button
-   $(".open-modal").click(function(){
-        $("#deleteModal").modal('show');
-        $(this).parent().parent().parent().parent().attr("id", "deleted");
-    });
-
-    // removes table
-    $("#removeTable").click(function () {
-           //$(this).closest(".table-wrapper1").remove();
-           $(".table-wrapper").remove("#deleted");
-           $("#deleteModal").modal('hide');
-           //$("div").remove(".modal-backdrop");
-    });
-
-    // removing deleted id
-    $("#close-modal").click(function (){
-       $("#deleted").removeAttr("id");
-    });
-
-    $(".close").click(function (){
-       $("#deleted").removeAttr("id");
-    });
-
-    $("#save-plan-btn").click(function(){
-        let requestConfig = {
-        method: 'POST',
-        url: 'localhost:3000/' + "the id"
-      };
-        $.ajax(requestConfig).then(function (responseMessage) {
-            console.log(responseMessage);
         });
-    });
 
-  });
+        // opens modal on Delete Section button
+        $(".open-modal").click(function () {
+          $("#deleteModal").modal("show");
+          $(this).parent().parent().parent().parent().attr("id", "deleted");
+        });
 
+        // removes table
+        $("#removeTable").click(function () {
+          //$(this).closest(".table-wrapper1").remove();
+          $(".table-wrapper").remove("#deleted");
+          $("#deleteModal").modal("hide");
+          //$("div").remove(".modal-backdrop");
+        });
+
+        // removing deleted id
+        $("#close-modal").click(function () {
+          $("#deleted").removeAttr("id");
+        });
+
+        $(".close").click(function () {
+          $("#deleted").removeAttr("id");
+        });
+
+        $("#save-plan-btn").click(function () {
+          let sections = [];
+
+          //for each table, get the title and rows and add to sections array
+          $(".table-wrapper").each(function () {
+            let title = $(this).find("input[name='inputBox']").val();
+            let courses = [];
+            $(this)
+              .find("tr")
+              .each(function () {
+                let semester = $(this)
+                  .find("td")
+                  .eq(0)
+                  .find("input[name='inputBox']")
+                  .val();
+                let course = $(this)
+                  .find("td")
+                  .eq(1)
+                  .find("input[name='inputBox']")
+                  .val();
+                let grade = $(this)
+                  .find("td")
+                  .eq(2)
+                  .find("input[name='inputBox']")
+                  .val();
+                  if(semester && course && grade){
+                courses.push({
+                  semester: semester,
+                  courseName: course,
+                  grade: grade,
+                });
+              }
+              });
+            sections.push({ sectionTitle: title, courses: courses });
+          });
+
+          //send sections array to server
+          $.ajax({
+            url: "/users/plans/" + formId,
+            type: "PUT",
+            data: JSON.stringify({
+              title: $("#form-title").val()
+                ? $("#form-title").val()
+                : "Untitled",
+              sections: sections,
+            }),
+            contentType: "application/json",
+            success: function (data) {
+              console.log(data);
+            },
+          });
+        });
+
+      $("#back-btn").click(function () {
+        window.location.href = "/";
+        console.log("back button clicked");
+      });
+      });    
     </script>
   </head>
-  <body>    
+  <body>
     <!--Modal HTML-->
+    <p hidden="true" id="form-id"><%= data %></p>
     <div class="modal fade" id="deleteModal">
       <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Section</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete this table?</p>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal">No</button>
-          <button type="button" class="btn btn-danger" id="removeTable">Yes</button>
-        </div>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Section</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this table?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              id="close-modal"
+            >
+              No
+            </button>
+            <button type="button" class="btn btn-danger" id="removeTable">
+              Yes
+            </button>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
+    <h1>
+      <input
+        type="text"
+        name="inputBox"
+        placeholder="Form Title"
+        id="form-title"
+      />
+    </h1>
     <!-- Table HTML -->
     <div class="container-lg">
       <div class="table-responsive">
-        <div class="table-wrapper">          
-          <div class="table-title">                    
-            <div class="row">
-              <div class="col-sm-6">
-                <input
-                  type="text"
-                  name="inputBox"
-                  placeholder="Title"
-                />
-              </div>
-              <div class="col-sm-3">
-                <button type="button" class="btn btn-info open-modal">
-                  <i class="fa fa-minus"></i> Delete Section
-                </button>
-              </div>
-              <div class="col-sm-3">
-                <button type="button" class="btn btn-info add-new">
-                  <i class="fa fa-plus"></i> Add New Row
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <table class="table table-bordered" id="table-1">
-            <thead>
-              <tr>
-                <th>Semester</th>
-                <th>Course</th>
-                <th>Grade</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="20F"
-                />
-                </td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="CS 545"
-                /></td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="A"
-                /></td>
-                <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="20F"
-                />
-                </td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="CS 545"
-                /></td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="A"
-                /></td>
-                <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="20F"
-                />
-                </td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="CS 545"
-                /></td>
-                <td><input
-                  type="text"
-                  name="inputBox"
-                  placeholder="A"
-                /></td>
-                <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
-                  <a class="delete" title="Delete" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE872;</i></a
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="table-wrapper">
+        <div class="table-hidden" hidden="true">
           <div class="table-title">
 
             <div class="row">
@@ -534,12 +608,6 @@
                   placeholder="A"
                 /></td>
                 <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
@@ -563,12 +631,6 @@
                   placeholder="A"
                 /></td>
                 <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
@@ -592,23 +654,18 @@
                   placeholder="A"
                 /></td>
                 <td>
-                  <!-- <a class="add" title="Add" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE03B;</i></a
-                  >
-                  <a class="edit" title="Edit" data-toggle="tooltip"
-                    ><i class="material-icons">&#xE254;</i></a
-                  > -->
                   <a class="delete" title="Delete" data-toggle="tooltip"
                     ><i class="material-icons">&#xE872;</i></a
                   >
                 </td>
               </tr>
             </tbody>
-          </table>
-        </div>
+          </table> 
       </div>
+    </div>
 
     <button id="new-table">New table</button>
     <button id="save-plan-btn">Save</button>
+    <button id="back-btn">Back</button>
   </body>
 </html>
