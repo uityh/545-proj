@@ -147,6 +147,11 @@
           var inputValue = $(this).val();
         });
 
+        //while data is loading, the table and title is hidden
+        $("#loading").show();
+        $(".container-lg").hide();
+        $("#form-title").hide();
+
         //get sections from database and add table for each section
         $.ajax({
           url: `http://localhost:3000/users/plans/${formId}`,
@@ -269,6 +274,11 @@
                 $(".table-responsive").find("table").last().append(row);
               });
             });
+
+            $("#loading").hide();
+            $(".container-lg").show();
+            $("#form-title").show();
+            console.log("done");
           },
           error: function (error) {
             console.log(error);
@@ -582,6 +592,7 @@
       />
     </h1>
     <!-- Table HTML -->
+    <h1 id="loading">Loading</h1>
     <div class="container-lg">
       <div class="table-responsive">
         <div class="table-hidden" hidden="true">
