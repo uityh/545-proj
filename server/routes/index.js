@@ -23,8 +23,8 @@ const constructorMethod = (app) => {
     res.render("signup");
   });
 
-  app.get("/studyPlan", (req, res) => {
-    res.render("study_plan");
+  app.get("/studyPlan/:id", (req, res) => {
+    res.render("study_plan", { data: req.params.id });
   });
 
   app.use("/users", usersRoutes);

@@ -104,9 +104,37 @@
     </style>
   </head>
   <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+          <div class="container">
+              <a class="navbar-brand" href="#">Scheduckler</a>
+              <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+              >
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                          <a class="nav-link" href="/login">Log in</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/signup">Sign up</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+  </header>
     <h1>My Study Forms</h1>
     <ul id="list">
-      <li><a href="./studyPlan">CS Major with No Minor</a> <a
+      <!-- <li><a href="./studyPlan">CS Major with No Minor</a> <a
         class="delete"
         title="Delete"
         data-toggle="tooltip"
@@ -129,7 +157,7 @@
         ><i class="material-icons"
             >&#xE872;</i
         ></a
-    ></i></li>
+    ></i></li> -->
     </ul>
 
     <button id="add-btn">Add Item</button>
@@ -160,7 +188,40 @@
         const modal = document.querySelector("#deleteModal");
         const confirmDeleteBtn = document.querySelector("#confirm-delete-btn");
         const cancelDeleteBtn = document.querySelector("#cancel-delete-btn");
-    
+
+        //use an ajax request to get the study plans from the database
+        //and display them on the page
+
+        $.ajax({
+            url: "/users/home/64413773da922d58b89a525a",
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                //loop through data and add each study plan to the page
+                for (let i = 0; i < data.length; i++) {
+                    const li = document.createElement("li");
+                    //add item to href in link
+                    const link = document.createElement("a");
+                    link.setAttribute("href", `./studyPlan/${data[i].id}`);
+                    link.innerText = data[i].formTitle;
+                    li.appendChild(link);
+                    li.id = data[i].id;
+                    li.innerHTML += `<a
+                    class="delete"
+                    title="Delete"
+                    data-toggle="tooltip"
+                    ><i class="material-icons"
+                        >&#xE872;</i
+                    ></a
+                ></i>`;
+                    list.appendChild(li);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+
 
         $("#add-btn").on("click", function () {
           $("#addModal").css("display", "block");
@@ -170,12 +231,26 @@
             //get text from input
             const item = $("#add-input").val();
             if (item) {
-            const li = document.createElement("li");
+
+             //call route function to add new study plan with ajax
+            var request = $.ajax({
+              url: "/users/home/64413773da922d58b89a525a",
+              type: "POST",
+              data: JSON.stringify({ title: item }),
+              dataType: "json",
+              contentType: "application/json; charset=utf-8"
+            });
+
+
+            request.done(function (data) {
+              console.log(data);
+              const li = document.createElement("li");
             //add item to href in link
             const link = document.createElement("a");
-            link.setAttribute("href", "link");
-            link.innerText = item;
+            link.setAttribute("href", `./studyPlan/${data.id}`);
+            link.innerText = data.formTitle;
             li.appendChild(link);
+            li.id = data.id;
             li.innerHTML += `<a
             class="delete"
             title="Delete"
@@ -185,20 +260,32 @@
             ></a
         ></i>`;
             list.appendChild(li);
+            });
             }
 
             $("#addModal").css("display", "none");
             $("#add-input").val("");
         });
-            
 
         //show modal when delete icon is clicked
         $("#list").on("click", ".delete", function () {
           $("#deleteModal").css("display", "block");
           const deleteIcon = $(this);
             $("#confirm-delete-btn").on("click", function () {
+              let id = deleteIcon.closest("li")[0].id;
                deleteIcon.closest("li").remove();
                 $("#deleteModal").css("display", "none");
+
+                var request = $.ajax({
+                  url: `/users/plans/${id}`,
+                  type: "DELETE",
+                  dataType: "json",
+                  contentType: "application/json; charset=utf-8"
+                });
+
+                request.done(function (msg) {
+                  console.log(msg);
+                });
             });
 
         });
