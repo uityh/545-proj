@@ -136,6 +136,39 @@
       input[type="text"]:focus {
         border-bottom: 2px solid black;
       }
+
+      /* center input box with id of form-title */
+      #form-title {
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+      }
+
+      #row1 {
+  padding: 20px 20px 5px 20px;
+  overflow: hidden;
+}
+
+.button-container {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+#save-btn {
+  text-align: center;
+  border: 1px solid;
+}
+
+#back-btn {
+  text-align: center;
+  border: 1px solid;
+}
+
+#new-table {
+  text-align: center;
+  border: 1px solid;
+}
     </style>
     <script>
       $(document).ready(function () {
@@ -535,16 +568,6 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Log in</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sign up</a>
-              </li>
-            </ul>
-          </div>
         </div>
       </nav>
     </header>
@@ -703,8 +726,14 @@
       </div>
     </div>
 
-    <button id="new-table">New table</button>
-    <button id="save-plan-btn">Save</button>
-    <button id="back-btn">Back</button>
+    <div id="row1">
+      <div class="button-container">
+        <button id="save-plan-btn" class="btn btn-success">Save</button>
+        <button id="new-table" class="btn btn-primary">New table</button>
+        <button id="back-btn" class="btn btn-danger">Back</button>
+      </div>
+    </div>
+    
+   
   </body>
 </html>
