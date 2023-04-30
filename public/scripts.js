@@ -12,7 +12,7 @@ $(document).ready(function () {
         }
     }
     updateHeader();
-    
+
     $(".nav-item:nth-child(2) a").on("click", function (event) {
         if (event.target.textContent === "Log out") {
             event.preventDefault();
@@ -54,6 +54,7 @@ $(document).ready(function () {
             $(".add-new").removeAttr("disabled");
         }
     });
+
     // Edit row on edit button click
     // $(document).on("click", ".edit", function () {
     //   $(this)
@@ -149,5 +150,56 @@ $(document).ready(function () {
             .find(".add, .edit")
             .toggle();
         $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $("#confirm-add-btn").on("click", function () {
+        //get text from input
+        const item = $("#add-input").val();
+        if (item) {
+            const li = document.createElement("li");
+            //add item to href in link
+            const link = document.createElement("a");
+            link.setAttribute("href", "link");
+            link.innerText = item;
+            li.appendChild(link);
+            li.innerHTML += `<a
+            class="delete"
+            title="Delete"
+            data-toggle="tooltip"
+            ><i class="material-icons"
+                >&#xE872;</i
+            ></a
+        ></i>`;
+            list.appendChild(li);
+        }
+
+        $("#addModal").css("display", "none");
+        $("#add-input").val("");
+    });
+
+    //show modal when delete icon is clicked
+    $("#list").on("click", ".delete", function () {
+        $("#deleteModal").css("display", "block");
+        const deleteIcon = $(this);
+        $("#confirm-delete-btn").on("click", function () {
+            deleteIcon.closest("li").remove();
+            $("#deleteModal").css("display", "none");
+        });
+    });
+
+    //hide modal when cancel button is clicked or clicked outside of modal
+    cancelDeleteBtn.addEventListener("click", () => {
+        $("#deleteModal").css("display", "none");
+    });
+
+    $("#cancel-add-btn").on("click", function () {
+        $("#addModal").css("display", "none");
+    });
+
+    window.addEventListener("click", (e) => {
+        if (e.target == deleteModal || e.target == addModal) {
+            $("#deleteModal").css("display", "none");
+            $("#addModal").css("display", "none");
+        }
     });
 });
