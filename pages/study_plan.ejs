@@ -543,6 +543,8 @@
               console.log(data);
             },
           });
+          //show toast
+          $(".toast").toast("show");
         });
 
       $("#back-btn").click(function () {
@@ -726,6 +728,7 @@
       </div>
     </div>
 
+
     <div id="row1">
       <div class="button-container">
         <button id="save-plan-btn" class="btn btn-success">Save</button>
@@ -733,7 +736,21 @@
         <button id="back-btn" class="btn btn-danger">Back</button>
       </div>
     </div>
-    
+
+    <div class="toast"  data-delay="4000" style="position: fixed; top: 1em; right: 1em;">
+      <div class="toast-header">
+        <img src="https://img.icons8.com/color/48/000000/ok--v2.png" width="20" height="20" class="rounded mr-2" alt="...">
+
+        <strong class="mr-auto">Success</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+      </div>
+      <div class="toast-body">
+        Your study plan has been saved!
+      </div>
+
+   
    
   </body>
 </html>
