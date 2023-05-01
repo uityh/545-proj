@@ -84,7 +84,6 @@
       .modal-content button {
         margin-top: 16px;
         padding: 8px 16px;
-        background-color: red;
         color: white;
         border: none;
         cursor: pointer;
@@ -100,6 +99,25 @@
         border: 1px solid #ccc;
         border-radius: 4px;
         resize: vertical;
+      }
+
+      .material-icons {
+        color: red;
+        margin-left: 10px;
+        float: left;
+      }
+      li {
+        display: inline;
+      }
+      ul{
+        margin-left: 10px;
+      }
+      a{
+        float: left;
+      }
+      button{
+        float:left;
+        margin-left: 10px;
       }
     </style>
   </head>
@@ -124,39 +142,17 @@
   </header>
     <h1>My Study Forms</h1>
     <ul id="list">
-      <!-- <li><a href="./studyPlan">CS Major with No Minor</a> <a
-        class="delete"
-        title="Delete"
-        data-toggle="tooltip"
-        ><i class="material-icons"
-            >&#xE872;</i
-        ></a
-    ></i></li>
-      <li><a href="./studyPlan">CS Major with Math Minor</a> <a
-        class="delete"
-        title="Delete"
-        data-toggle="tooltip"
-        ><i class="material-icons"
-            >&#xE872;</i
-        ></a
-    ></i></li>
-      <li><a href="./studyPlan">CS Major with CySec Minor</a> <a
-        class="delete"
-        title="Delete"
-        data-toggle="tooltip"
-        ><i class="material-icons"
-            >&#xE872;</i
-        ></a
-    ></i></li> -->
     </ul>
 
-    <button id="add-btn">Add Item</button>
+    <button id="add-btn" class="btn btn-success">Create New Plan</button>
 
     <div id="deleteModal" class="modal">
       <div class="modal-content">
         <p class="modal-text">Are you sure you want to delete this item?</p>
-        <button id="confirm-delete-btn">Yes</button>
-        <button id="cancel-delete-btn">Cancel</button>
+        <div class="btn-group">
+          <button id="cancel-delete-btn" style="margin-right: 30px;" class="btn btn-secondary">Cancel</button>
+          <button id="confirm-delete-btn" class="btn btn-danger">Yes</button>
+        </div>
       </div>
     </div>
 
@@ -165,8 +161,10 @@
       <div class="modal-content">
         <p class="modal-text">Enter the name of this study plan</p>
         <input type="text" id="add-input" />
-        <button id="confirm-add-btn">Add</button>
-        <button id="cancel-add-btn">Cancel</button>
+        <div class = "btn-group">
+          <button id="confirm-add-btn" class="btn-primary" style="margin-right: 15px;">Add</button>
+          <button id="cancel-add-btn" class="btn btn-secondary">Cancel</button>
+        </div>
       </div>
 
 
@@ -202,9 +200,10 @@
                     data-toggle="tooltip"
                     ><i class="material-icons"
                         >&#xE872;</i
-                    ></a
-                ></i>`;
+                    ></a></i>`;
+                    brElement = document.createElement("br");
                     list.appendChild(li);
+                    list.appendChild(brElement);
                 }
             },
             error: function (error) {
