@@ -186,7 +186,6 @@
           var inputValue = $(this).val();
         });
 
-        //while data is loading, the table and title is hidden
         $("#loading").show();
         $(".container-lg").hide();
         $("#form-title").hide();
@@ -241,7 +240,6 @@
 
               var lastAddNew = $(".table-responsive").find(".add-new").last();
               lastAddNew.click(function () {
-                //get parent and get table sibling
                 var table = $(this)
                   .parent()
                   .parent()
@@ -344,22 +342,6 @@
             $(".add-new").removeAttr("disabled");
           }
         });
-        // Edit row on edit button click
-        // $(document).on("click", ".edit", function () {
-        //   $(this)
-        //     .parents("tr")
-        //     .find("td:not(:last-child)")
-        //     .each(function () {
-        //       $(this).html(
-        //         '<input type="text" class="form-control" value="' +
-        //           $(this).text() +
-        //           '">'
-        //       );
-        //     });
-        //   $(this).parents("tr").find(".add, .edit").toggle();
-        //   $(".add-new").attr("disabled", "disabled");
-        // });
-        // Delete row on delete button click
         $(document).on("click", ".delete", function () {
           $('[data-toggle="tooltip"]').tooltip("hide");
 
@@ -405,10 +387,8 @@
 
           $(".table-responsive").append(html);
 
-          //get last add new button and add click event
           var lastAddNew = $(".table-responsive").find(".add-new").last();
           lastAddNew.click(function () {
-            //get parent and get table sibling
             var table = $(this).parent().parent().parent().siblings("table");
             var index = table.find("tbody tr:last-child").index();
             var row =
@@ -428,7 +408,6 @@
             $('[data-toggle="tooltip"]').tooltip();
           });
 
-          //gets last open-modal element and adds click event
           var lastDeleteTable = $(".table-responsive")
             .find(".open-modal")
             .last();
@@ -438,7 +417,6 @@
           });
           // removes table
           $("#removeTable").click(function () {
-            //$(this).closest(".table-wrapper1").remove();
             $(".table-wrapper").remove("#deleted");
             $("#deleteModal").modal("hide");
             //$("div").remove(".modal-backdrop");
@@ -483,10 +461,8 @@
 
         // removes table
         $("#removeTable").click(function () {
-          //$(this).closest(".table-wrapper1").remove();
           $(".table-wrapper").remove("#deleted");
           $("#deleteModal").modal("hide");
-          //$("div").remove(".modal-backdrop");
         });
 
         // removing deleted id
@@ -549,7 +525,6 @@
               console.log(data);
             },
           });
-          //show toast
           $(".toast").toast("show");
         });
 

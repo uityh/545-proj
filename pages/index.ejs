@@ -177,18 +177,15 @@
         const confirmDeleteBtn = document.querySelector("#confirm-delete-btn");
         const cancelDeleteBtn = document.querySelector("#cancel-delete-btn");
 
-        //use an ajax request to get the study plans from the database
-        //and display them on the page
+
 
         $.ajax({
             url: "/users/home/64413773da922d58b89a525a",
             type: "GET",
             success: function (data) {
                 console.log(data);
-                //loop through data and add each study plan to the page
                 for (let i = 0; i < data.length; i++) {
                     const li = document.createElement("li");
-                    //add item to href in link
                     const link = document.createElement("a");
                     link.setAttribute("href", `./studyPlan/${data[i].id}`);
                     link.innerText = data[i].formTitle;
@@ -217,7 +214,6 @@
       });
 
       $("#confirm-add-btn").on("click", function () {
-            //get text from input
             const item = $("#add-input").val();
             if (item) {
 
@@ -234,7 +230,6 @@
             request.done(function (data) {
               console.log(data);
               const li = document.createElement("li");
-            //add item to href in link
             const link = document.createElement("a");
             link.setAttribute("href", `./studyPlan/${data.id}`);
             link.innerText = data.formTitle;
